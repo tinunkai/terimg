@@ -1,7 +1,7 @@
 all: main
 
 main:
-	.venv/bin/python main.py
+	.venv/bin/python ti.py --width=50 img/logo.png
 
 init:
 	python3 -m venv .venv
