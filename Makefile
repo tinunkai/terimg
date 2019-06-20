@@ -1,7 +1,10 @@
-all: main
+all: ti
 
-main:
-	.venv/bin/python ti.py --width=50 img/logo.png
+ti:
+	.venv/bin/python ti.py img/autumn.jpg
+
+cur:
+	.venv/bin/python curimg.py
 
 init:
 	python3 -m venv .venv

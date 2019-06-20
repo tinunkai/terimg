@@ -1,46 +1,5 @@
-#!.venv/bin/python
-import click
 import sys,os
 import curses
-import random
-
-import colorful
-import numpy as np
-from PIL import Image
-
-IMG = './img/logo.png'
-
-@click.command()
-@click.option('--width', default=128)
-@click.argument('imgpath')
-def main(width, imgpath):
-    colorful.use_true_colors()
-    np.set_printoptions(formatter={'int': lambda x: format(x, 'x')})
-
-    im = Image.open(imgpath)
-    _width, _height = im.size
-    height = _height * _width // width
-    im.thumbnail((width, height), Image.ANTIALIAS)
-    img = np.asarray(im.convert('RGBA')).astype(np.int32)
-    tdraw(img)
-
-def tdraw(img):
-    cache = ''
-    for y in range(0, img.shape[0]-1, 2):
-        for x in range(img.shape[1]):
-            cache += printc('\u2580',
-                   fg=img[y, x, :3]*img[y, x, 3]//255,
-                   bg=img[y+1, x, :3]*img[y+1, x, 3]//255)
-        cache += '\n'
-    sys.stdout.write(cache)
-    sys.stdout.flush()
-
-def printc(content, fg='#000000', bg='#ffffff'):
-    colorful.use_palette({'fg': fg, 'bg': bg})
-    return str(colorful.fg_on_bg(str(content)))
-
-def transform(img, rate):
-    pass
 
 def draw_menu(stdscr):
     k = 0
@@ -48,7 +7,7 @@ def draw_menu(stdscr):
     cursor_y = 0
 
     # Clear and refresh the screen for a blank canvas
-    stdscr.clear()
+    #stdscr.clear()
     stdscr.refresh()
 
     # Start colors in curses
@@ -56,12 +15,14 @@ def draw_menu(stdscr):
     curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
     curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    for r in range(1, 256):
+        curses.init_pair(r*255, r, 256-r)
 
     # Loop where k is the last character pressed
     while (k != ord('q')):
 
         # Initialization
-        stdscr.clear()
+        #stdscr.clear()
         height, width = stdscr.getmaxyx()
 
         if k == curses.KEY_DOWN:
@@ -94,13 +55,19 @@ def draw_menu(stdscr):
         start_y = int((height // 2) - 2)
 
         # Rendering some text
-        whstr = "Width: {}, Height: {}".format(width, height)
+        whstr = str(curses.can_change_color())
+        whstr = str(curses.COLOR_PAIRS)
         stdscr.addstr(0, 0, whstr, curses.color_pair(1))
+
+        for r in range(0, 256):
+            if r == 100:
+                curses.init_color(1, 500, 500, 500)
+            stdscr.addstr(r // width + 1, r % width, '\u2580', curses.color_pair(r+1))
 
         # Render status bar
         stdscr.attron(curses.color_pair(3))
         stdscr.addstr(height-1, 0, statusbarstr)
-        stdscr.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
+        stdscr.addstr(height-1, len(statusbarstr), "\u2580" * (width - len(statusbarstr) - 1))
         stdscr.attroff(curses.color_pair(3))
 
         # Turning on attributes for title
@@ -126,7 +93,7 @@ def draw_menu(stdscr):
         # Wait for next input
         k = stdscr.getch()
 
-def draw():
+def main():
     curses.wrapper(draw_menu)
 
 if __name__ == "__main__":
