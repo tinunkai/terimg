@@ -1,7 +1,13 @@
-all: main
+all: ti
 
-main:
-	.venv/bin/python ti.py --width=50 img/logo.png
+ti:
+	@ .venv/bin/python ti.py --width=64 --height=64 --scale=16 img/autumn.jpg
+
+cur:
+	.venv/bin/python curexample.py
+
+testcolor:
+	./testcolor.sh
 
 init:
 	python3 -m venv .venv
