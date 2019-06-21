@@ -7,7 +7,7 @@ def draw_menu(stdscr):
     cursor_y = 0
 
     # Clear and refresh the screen for a blank canvas
-    #stdscr.clear()
+    stdscr.clear()
     stdscr.refresh()
 
     # Start colors in curses
@@ -15,14 +15,12 @@ def draw_menu(stdscr):
     curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
     curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
-    for r in range(1, 256):
-        curses.init_pair(r*255, r, 256-r)
 
     # Loop where k is the last character pressed
     while (k != ord('q')):
 
         # Initialization
-        #stdscr.clear()
+        stdscr.clear()
         height, width = stdscr.getmaxyx()
 
         if k == curses.KEY_DOWN:
@@ -55,19 +53,13 @@ def draw_menu(stdscr):
         start_y = int((height // 2) - 2)
 
         # Rendering some text
-        whstr = str(curses.can_change_color())
-        whstr = str(curses.COLOR_PAIRS)
+        whstr = "Width: {}, Height: {}".format(width, height)
         stdscr.addstr(0, 0, whstr, curses.color_pair(1))
-
-        for r in range(0, 256):
-            if r == 100:
-                curses.init_color(1, 500, 500, 500)
-            stdscr.addstr(r // width + 1, r % width, '\u2580', curses.color_pair(r+1))
 
         # Render status bar
         stdscr.attron(curses.color_pair(3))
         stdscr.addstr(height-1, 0, statusbarstr)
-        stdscr.addstr(height-1, len(statusbarstr), "\u2580" * (width - len(statusbarstr) - 1))
+        stdscr.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
         stdscr.attroff(curses.color_pair(3))
 
         # Turning on attributes for title
