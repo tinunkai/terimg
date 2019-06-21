@@ -27,5 +27,5 @@ quit with `q`
 `--height` set the height of window  
 `--scale` resize the entire image with 1/scale
 
-# License
+## License
 MIT
