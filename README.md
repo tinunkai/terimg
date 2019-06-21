@@ -17,10 +17,10 @@ run example
 ```shell
 ./ti.py --width=100 --height=64 --scale=10 path/to/img.png
 ```
-move one pixel with `h, j, k, l`.
-move half width/height of window with `Ctrl-h, Ctrl-u, Ctrl-d, Ctrl-l`.
-zoom with +, -.
-quit with q.
+move one pixel with `h, j, k, l`  
+move half width/height of window with `Ctrl-h, Ctrl-u, Ctrl-d, Ctrl-l`  
+zoom with `+, -`  
+quit with `q`
 
 ## option
 `--width` set the width of window  
