@@ -1,5 +1,5 @@
 # terimg
-display image in terminal
+display image in true color capable linux/unix terminal (not supporting windows)
 
 [![demo](https://asciinema.org/a/252886.svg)](https://asciinema.org/a/252886?autoplay=1)
 
@@ -26,3 +26,6 @@ quit with `q`
 `--width` set the width of window  
 `--height` set the height of window  
 `--scale` resize the entire image with 1/scale
+
+# license
+MIT
