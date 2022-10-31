@@ -19,7 +19,7 @@ run example
 ```
 move one pixel with `h, j, k, l`  
 move half width/height of window with `Ctrl-h, Ctrl-u, Ctrl-d, Ctrl-l`  
-zoom with `+, -`  
+zoom in/out with `i, o`, scale=1 with `0`  
 quit with `q`
 
 ## Option

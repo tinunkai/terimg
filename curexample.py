@@ -1,5 +1,6 @@
-import sys,os
+import sys, os
 import curses
+
 
 def draw_menu(stdscr):
     k = 0
@@ -17,7 +18,7 @@ def draw_menu(stdscr):
     curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
     # Loop where k is the last character pressed
-    while (k != ord('q')):
+    while k != ord("q"):
 
         # Initialization
         stdscr.clear()
@@ -33,18 +34,20 @@ def draw_menu(stdscr):
             cursor_x = cursor_x - 1
 
         cursor_x = max(0, cursor_x)
-        cursor_x = min(width-1, cursor_x)
+        cursor_x = min(width - 1, cursor_x)
 
         cursor_y = max(0, cursor_y)
-        cursor_y = min(height-1, cursor_y)
+        cursor_y = min(height - 1, cursor_y)
 
         # Declaration of strings
-        title = "Curses example"[:width-1]
-        subtitle = "Written by Clay McLeod"[:width-1]
-        keystr = "Last key pressed: {}".format(k)[:width-1]
-        statusbarstr = "Press 'q' to exit | STATUS BAR | Pos: {}, {}".format(cursor_x, cursor_y)
+        title = "Curses example"[: width - 1]
+        subtitle = "Written by Clay McLeod"[: width - 1]
+        keystr = "Last key pressed: {}".format(k)[: width - 1]
+        statusbarstr = "Press 'q' to exit | STATUS BAR | Pos: {}, {}".format(
+            cursor_x, cursor_y
+        )
         if k == 0:
-            keystr = "No key press detected..."[:width-1]
+            keystr = "No key press detected..."[: width - 1]
 
         # Centering calculations
         start_x_title = int((width // 2) - (len(title) // 2) - len(title) % 2)
@@ -58,8 +61,10 @@ def draw_menu(stdscr):
 
         # Render status bar
         stdscr.attron(curses.color_pair(3))
-        stdscr.addstr(height-1, 0, statusbarstr)
-        stdscr.addstr(height-1, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
+        stdscr.addstr(height - 1, 0, statusbarstr)
+        stdscr.addstr(
+            height - 1, len(statusbarstr), " " * (width - len(statusbarstr) - 1)
+        )
         stdscr.attroff(curses.color_pair(3))
 
         # Turning on attributes for title
@@ -75,7 +80,7 @@ def draw_menu(stdscr):
 
         # Print rest of text
         stdscr.addstr(start_y + 1, start_x_subtitle, subtitle)
-        stdscr.addstr(start_y + 3, (width // 2) - 2, '-' * 4)
+        stdscr.addstr(start_y + 3, (width // 2) - 2, "-" * 4)
         stdscr.addstr(start_y + 5, start_x_keystr, keystr)
         stdscr.move(cursor_y, cursor_x)
 
@@ -85,8 +90,10 @@ def draw_menu(stdscr):
         # Wait for next input
         k = stdscr.getch()
 
+
 def main():
     curses.wrapper(draw_menu)
+
 
 if __name__ == "__main__":
     main()
